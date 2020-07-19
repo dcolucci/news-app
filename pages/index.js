@@ -1,6 +1,15 @@
 import Head from 'next/head'
+import fetch from 'node-fetch';
 
-export default function Home() {
+export async function getServerSideProps() {
+  const res = await fetch('http://localhost:8000/top-headlines')
+  const data = await res.json()
+  return {
+    props: { data }
+  }
+}
+
+export default function Home({ data }) {
   return (
     <div className="container">
       <Head>
@@ -46,6 +55,7 @@ export default function Home() {
             </p>
           </a>
         </div>
+        <div>{JSON.stringify(data)}</div>
       </main>
 
       <footer>
